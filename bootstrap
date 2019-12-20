@@ -1,0 +1,97 @@
+#!/bin/bash
+export DEBIAN_FRONTEND=noninteractive;
+
+sudo apt-get update -yq
+
+sudo apt-get install -yq git-core curl 
+
+echo "## SSH Tweaks bitbucket/github.."
+sudo mkdir -p "/home/ubuntu/.ssh"
+sudo rm -rf "/home/ubuntu/.ssh/deploy_id_rsa"
+sudo rm -rf "/home/ubuntu/.ssh/deploy_id_rsa.pub"
+sudo rm -rf "/home/ubuntu/.ssh/config"
+sudo chmod 700 "/home/ubuntu/.ssh/"
+
+sudo cat <<EOL > "/home/ubuntu/.ssh/deploy_id_rsa.pub"
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDjl3fYd0RcArELx4OLP/raycqxb9SKW86Q0CHFCZrN4g+J0DEoI0z0ROjzUxqMcsGLDmvftqtu+ugHx4IcbQLqXxw6TW7Xavg/39OTAo7RXnGuGI4cS6EHKFi9mOjhmkYaf3Y7/Y6wkFbIqrlOuNQPpJ1KTdyjmQthlt22E6Zoc6GPyYgpKLVKIJNlviSGWRWo4TLRjiebW1Mzk7yvkUjE4eznQB+kPWEG082+oWuYs5MWo0kkkUgiN9hvQpq85BH77BPHPG/NIwkQRje0/FJ+fVuUJO0g51drGpo8JW2l7v9jZvC+VvVRHtXA1PoJhWo7ZcjVf15aKtURx0TAE9cSO/Uepf54dwV35OeHIjOBrkxkwj1sdW30IOr2wWxLNpVwal/u/CMf7VnRONmCs83cLT2cqXO2N7wCyCYlF6CtULsJZDxqw2GWQfeUyn4ljFPwjkNHPKASHKeqyk1+zIRj3YL8rpfSII1edxBeGSVKgfep2qjOcPjD3C76G3xuF3BDwzkCJU4ameLki2x5zxubcWk39++Pp04IXT3JsnzM3xvUANhcvvg73+kSgbcq/I2W9fT8OsGkLMcRfdEm3dYWcKr6NtIXArPGK4v05rY6QUN0u3qup3/9sct8hCIKyr8j/bZfdZ3DsjM8AuegWuQhW7yhNK2Co/KJfLrSlJvE+w== autodeploy
+
+EOL
+
+sudo cat <<EOL > "/home/ubuntu/.ssh/deploy_id_rsa"
+-----BEGIN OPENSSH PRIVATE KEY-----
+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
+-----END OPENSSH PRIVATE KEY-----
+
+EOL
+
+sudo cat <<EOL > "/home/ubuntu/.ssh/config"
+Host github.com
+    Hostname github.com
+    StrictHostKeyChecking no
+    IdentityFile /home/ubuntu/.ssh/deploy_id_rsa.pub
+    IdentitiesOnly yes
+    User git
+
+EOL
+
+sudo chmod 700 "/home/ubuntu/.ssh/"
+sudo chmod 700 "/home/ubuntu/.ssh/config"
+
+sudo chmod 600 "/home/ubuntu/.ssh/deploy_id_rsa.pub"
+sudo chmod 600 "/home/ubuntu/.ssh/deploy_id_rsa"
+
+ssh-keyscan -t rsa github.com >> "/home/ubuntu/.ssh/known_hosts"
+
+eval `ssh-agent -s`
+ssh-add "/home/ubuntu/.ssh/deploy_id_rsa"
+
+git clone git@github.com:MPSoftDenmark/eficode-userdata.git
+#git clone https://github.com/MPSoftDenmark/eficode-userdata.git
+
+sudo bash eficode-userdata/deploy_os 
