@@ -1,0 +1,2 @@
+# awsboot
+Public aws bootup
